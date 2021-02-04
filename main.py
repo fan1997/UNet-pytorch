@@ -59,7 +59,7 @@ for i in range(num_epoches):
         print('step_now: {}, step loss: {}'.format(step_now,loss_cpu))
         if step_now % save_step == 0:
             val_loss = 0
-            torch.save(model.state_dict(), "./result/step=%d" % (step_now))
+            torch.save(model.state_dict(), "./step=%d" % (step_now))
 '''
 ## FP16 !
 for i in range(num_epoches):
@@ -79,7 +79,7 @@ for i in range(num_epoches):
         total_loss += loss_cpu
         if step_now % save_step == 0:
             val_loss = 0
-            torch.save(model.state_dict(), "./result/step=%d" % (step_now))
+            torch.save(model.state_dict(), "./step=%d" % (step_now))
 
 torch.cuda.synchronize()
 end = time.time()
