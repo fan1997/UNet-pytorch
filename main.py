@@ -20,7 +20,7 @@ model = UNet(1, 2).to(device)
 criterion = CrossEntropyWithLogits().to(device)
 optimizer = Adam(model.parameters(), lr=0.0001, weight_decay=0.0005, eps=1e-08)
 
-save_step = 400
+save_step = 200
 
 
 ##test data load time 
@@ -43,6 +43,7 @@ torch.cuda.synchronize()
 start = time.time()
 model.train()
 ## FP32 !
+
 '''
 for i in range(num_epoches):
     for id, sample in enumerate(train_dataloader):
@@ -59,8 +60,9 @@ for i in range(num_epoches):
         print('step_now: {}, step loss: {}'.format(step_now,loss_cpu))
         if step_now % save_step == 0:
             val_loss = 0
-            torch.save(model.state_dict(), "./step=%d" % (step_now))
+            torch.save(model.state_dict(), './model-step%d.pth' % (step_now))
 '''
+
 ## FP16 !
 for i in range(num_epoches):
     for id, sample in enumerate(train_dataloader):
@@ -79,9 +81,9 @@ for i in range(num_epoches):
         total_loss += loss_cpu
         if step_now % save_step == 0:
             val_loss = 0
-            torch.save(model.state_dict(), "./step=%d" % (step_now))
-
+            torch.save(model.state_dict(), './model-step%d.pth' % (step_now))
+        
 torch.cuda.synchronize()
 end = time.time()
 print("training time per step(ms): ", (end - start)*1000 / (num_epoches*2))
-torch.save(model.state_dict(), "./result/step=all")
+torch.save(model.state_dict(), './model-all.pth')
