@@ -114,4 +114,3 @@ def create_dataset(data_dir, repeat=400, train_batch_size=16, augment=False, cro
     train_dataloader = DataLoader(
         dataset=udataset, batch_size=train_batch_size, shuffle=True, num_workers=1)
     return train_dataloader, 1
-
